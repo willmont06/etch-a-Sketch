@@ -1,0 +1,77 @@
+z<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etch a Sketch</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            width: 560px; /* Set a fixed width for the grid */
+            margin: 20px 0; /* Space above and below the grid */
+        }
+        .square {
+            width: 19px; /* Adjust width */
+            height: 19px; /* Keep height equal to width for squares */
+            background-color: lightblue; /* Default color */
+            border: 1px solid #000; /* Border for visibility */
+            box-sizing: border-box; /* Include border in width/height */
+            transition: background-color 0.3s; /* Smooth color transition */
+        }
+    </style>
+</head>
+<body>
+
+<button id="new-grid-button">Create New Grid</button>
+<div class="container" id="grid-container"></div>
+
+<script>
+    // Function to create a grid of squares
+    function createGrid(rows, cols) {
+        const gridContainer = document.getElementById('grid-container');
+        gridContainer.innerHTML = ''; // Clear existing squares
+
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+                const square = document.createElement('div');
+                square.className = 'square';
+
+                // Add event listener to change color on hover
+                square.addEventListener('mouseenter', () => {
+                    square.style.backgroundColor = 'deepskyblue'; // Change color on hover
+                });
+
+                // Add event listener to keep the color when clicked
+                square.addEventListener('click', () => {
+                    square.style.backgroundColor = 'gold'; // Change color to gold on click
+                });
+
+                gridContainer.appendChild(square);
+            }
+        }
+    }
+
+    // Create initial grid on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        createGrid(16, 16); // Create a 16x16 grid
+    });
+
+    // Button to create a new grid
+    document.getElementById('new-grid-button').addEventListener('click', () => {
+        let size = prompt("Enter the number of squares per side (max 100):");
+        size = Math.min(Math.max(size, 1), 100); // Limit input between 1 and 100
+        createGrid(size, size); // Create a new grid
+    });
+</script>
+
+</body>
+</html>
